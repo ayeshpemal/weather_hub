@@ -63,10 +63,24 @@ async function fetchCity(cityId: string, cityName: string): Promise<NormalizedWe
     return normalize(cached, cityId, cityName);
   }
 
-  const { data } = await axios.get<OpenWeatherResponse>(buildApiUrl(cityId));
-  rawCache.set(cacheKey, data);
-  return normalize(data, cityId, cityName);
+  try {
+    const { data } = await axios.get<OpenWeatherResponse>(buildApiUrl(cityId));
+    rawCache.set(cacheKey, data);
+    return normalize(data, cityId, cityName);
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      const status = err.response?.status;
+      const message = (err.response?.data as { message?: string })?.message ?? err.message;
+      console.error(
+        `[WeatherService] Failed to fetch ${cityName} (id: ${cityId}) — HTTP ${status ?? "network error"}: ${message}`
+      );
+    } else {
+      console.error(`[WeatherService] Unexpected error for ${cityName} (id: ${cityId}):`, err);
+    }
+    throw err; // re-throw so Promise.allSettled in getAllWeather marks this city as rejected
+  }
 }
+
 
 export async function getAllWeather(): Promise<NormalizedWeather[]> {
   const results = await Promise.allSettled(cities.map((c) => fetchCity(c.CityCode, c.CityName)));
