@@ -2,6 +2,7 @@ import { Router, type Request, type Response } from "express";
 import NodeCache from "node-cache";
 import { getAllWeather, getRawCacheStatus } from "../services/weatherService.js";
 import { rankCities } from "../services/comfortScore.js";
+import { checkJwt } from "../middleware/auth.js";
 
 const router = Router();
 
@@ -9,8 +10,8 @@ const router = Router();
 const processedCache = new NodeCache({ stdTTL: 300, checkperiod: 60 });
 const PROCESSED_KEY = "ranked_weather";
 
-// Returns all cities ranked by Comfort Index Score (highest first).
-router.get("/weather", async (_req: Request, res: Response) => {
+// Protected: Returns all cities ranked by Comfort Index Score (highest first).
+router.get("/weather", checkJwt, async (_req: Request, res: Response) => {
   try {
     const cached = processedCache.get(PROCESSED_KEY);
     if (cached) {
@@ -52,6 +53,5 @@ router.get("/cache-status", (_req: Request, res: Response) => {
     res.status(500).json({ error: message });
   }
 });
-
 
 export default router;

@@ -1,6 +1,7 @@
 import "dotenv/config";
-import express, { type Express } from "express";
+import express, { type Express, type Request, type Response, type NextFunction } from "express";
 import cors from "cors";
+import { UnauthorizedError } from "express-oauth2-jwt-bearer";
 import weatherRouter from "./routes/weather.js";
 
 const app: Express = express();
@@ -17,6 +18,15 @@ app.use("/api", weatherRouter);
 
 app.get("/health", (_req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
+});
+
+// Auth0 error handler
+app.use((err: Error, _req: Request, res: Response, next: NextFunction) => {
+  if (err instanceof UnauthorizedError) {
+    res.status(401).json({ error: "Unauthorized", message: err.message });
+    return;
+  }
+  next(err);
 });
 
 app.listen(PORT, () => {
