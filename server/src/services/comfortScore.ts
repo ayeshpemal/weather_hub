@@ -56,6 +56,12 @@ const PARAMETERS: ComfortParameter[] = [
     weight: 15,
     normalize: (w) => trapezoid(w.cloudiness, 0, 10, 50, 100),
   },
+  {
+    name: "Visibility",
+    description: "Ideal 8_000 - 10_000.",
+    weight: 10,
+    normalize: (w) => trapezoid(w.visibility, 0, 8_000, 10_000, 11_000),
+  },
 ];
 
 /*

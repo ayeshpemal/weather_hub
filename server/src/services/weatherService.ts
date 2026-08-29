@@ -3,7 +3,7 @@ import NodeCache from "node-cache";
 import { cities } from "../data/cities.js";
 
 // Raw response cache — one entry per city, 5-minute TTL
-const rawCache = new NodeCache({ stdTTL: 300 });
+const rawCache = new NodeCache({ stdTTL: 300, checkperiod: 60 });
 
 export interface OpenWeatherResponse {
   id: number;
@@ -72,7 +72,7 @@ async function fetchCity(cityId: string, cityName: string): Promise<NormalizedWe
       const status = err.response?.status;
       const message = (err.response?.data as { message?: string })?.message ?? err.message;
       console.error(
-        `[WeatherService] Failed to fetch ${cityName} (id: ${cityId}) — HTTP ${status ?? "network error"}: ${message}`
+        `[WeatherService] Failed to fetch ${cityName} (id: ${cityId}) — HTTP ${status ?? "network error"}: ${message}`,
       );
     } else {
       console.error(`[WeatherService] Unexpected error for ${cityName} (id: ${cityId}):`, err);
@@ -80,7 +80,6 @@ async function fetchCity(cityId: string, cityName: string): Promise<NormalizedWe
     throw err; // re-throw so Promise.allSettled in getAllWeather marks this city as rejected
   }
 }
-
 
 export async function getAllWeather(): Promise<NormalizedWeather[]> {
   const results = await Promise.allSettled(cities.map((c) => fetchCity(c.CityCode, c.CityName)));

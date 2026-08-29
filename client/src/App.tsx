@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { LoginPage } from "./components/LoginPage";
+import { Dashboard } from "./components/Dashboard";
 
 function App() {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -19,7 +20,7 @@ function App() {
 
   return (
     <div className="dashboard">
-      <p style={{ color: "white", padding: "2rem" }}>Authenticated!.</p>
+      <Dashboard />
     </div>
   );
 }
