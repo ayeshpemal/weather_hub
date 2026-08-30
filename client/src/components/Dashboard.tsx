@@ -1,10 +1,12 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useWeatherData } from "../hooks/useWeatherData";
+import { useTheme } from "../hooks/useTheme";
 import { WeatherCard } from "./WeatherCard";
 
 export function Dashboard() {
   const { user, logout } = useAuth0();
   const { data, loading, error, refetch } = useWeatherData();
+  const [theme, toggleTheme] = useTheme();
 
   return (
     <div className="dashboard">
@@ -16,6 +18,15 @@ export function Dashboard() {
         </div>
         <div className="header-user">
           <span className="user-email">{user?.email}</span>
+          <button
+            id="theme-toggle-btn"
+            className="theme-toggle-btn"
+            onClick={toggleTheme}
+            title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            aria-label={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          >
+            {theme === "dark" ? "☀️" : "🌙"}
+          </button>
           <button
             id="logout-btn"
             className="logout-btn"

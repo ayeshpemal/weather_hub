@@ -1,6 +1,5 @@
-/* ============================================================
-   Design Tokens
-   ============================================================ */
+/* Dark Mode (default) */
+
 :root {
   --bg-base: #060d1f;
   --bg-surface: rgba(255, 255, 255, 0.04);
@@ -31,20 +30,59 @@
   --shadow-card: 0 25px 50px rgba(0, 0, 0, 0.6);
   --shadow-glow: 0 0 30px rgba(79, 156, 249, 0.2);
 
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --transition: 0.2s ease;
+
+  --header-bg: rgba(6, 13, 31, 0.85);
+  --stat-bg: rgba(255, 255, 255, 0.04);
+  --score-bar-track: rgba(255, 255, 255, 0.06);
 }
 
-/* ============================================================
-   Reset & Base
-   ============================================================ */
-*, *::before, *::after {
+/* Light Mode */
+
+[data-theme="light"] {
+  --bg-base: #f0f4ff;
+  --bg-surface: rgba(255, 255, 255, 0.75);
+  --bg-surface-hover: rgba(255, 255, 255, 0.95);
+  --border: rgba(0, 0, 0, 0.08);
+  --border-accent: rgba(79, 120, 249, 0.45);
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+
+  --blue: #2563eb;
+  --blue-dark: #1d4ed8;
+  --purple: #7c3aed;
+  --cyan: #0891b2;
+  --green: #059669;
+  --amber: #d97706;
+  --red: #dc2626;
+
+  --gradient-primary: linear-gradient(135deg, #2563eb, #7c3aed);
+  --gradient-bg: linear-gradient(135deg, #e8eeff 0%, #f0e8ff 50%, #e8f4ff 100%);
+
+  --shadow-card: 0 20px 48px rgba(37, 99, 235, 0.1);
+  --shadow-glow: 0 0 30px rgba(37, 99, 235, 0.15);
+
+  --header-bg: rgba(240, 244, 255, 0.88);
+  --stat-bg: rgba(0, 0, 0, 0.035);
+  --score-bar-track: rgba(0, 0, 0, 0.07);
+}
+
+/* Reset & Base */
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   min-height: 100vh;
 }
@@ -57,9 +95,8 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ============================================================
-   Login Page
-   ============================================================ */
+/* Login Page */
+
 .login-page {
   min-height: 100vh;
   display: flex;
@@ -73,7 +110,7 @@ body {
 
 /* Atmospheric glow orbs */
 .login-page::before {
-  content: '';
+  content: "";
   position: absolute;
   width: 700px;
   height: 700px;
@@ -84,7 +121,7 @@ body {
 }
 
 .login-page::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 500px;
   height: 500px;
@@ -111,8 +148,14 @@ body {
 }
 
 @keyframes card-rise {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .login-emoji {
@@ -124,8 +167,13 @@ body {
 }
 
 @keyframes pulse-glow {
-  0%, 100% { filter: drop-shadow(0 0 12px rgba(79, 156, 249, 0.4)); }
-  50%       { filter: drop-shadow(0 0 28px rgba(79, 156, 249, 0.8)); }
+  0%,
+  100% {
+    filter: drop-shadow(0 0 12px rgba(79, 156, 249, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 28px rgba(79, 156, 249, 0.8));
+  }
 }
 
 .login-card h1 {
@@ -160,7 +208,10 @@ body {
   border: none;
   border-radius: var(--radius-full);
   cursor: pointer;
-  transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
+  transition:
+    opacity var(--transition),
+    transform var(--transition),
+    box-shadow var(--transition);
   box-shadow: 0 4px 20px rgba(79, 156, 249, 0.35);
   letter-spacing: 0.3px;
 }
@@ -175,9 +226,8 @@ body {
   transform: translateY(0);
 }
 
-/* ============================================================
-   Loading Screen
-   ============================================================ */
+/* Loading Screen */
+
 .loading-screen {
   min-height: 100vh;
   display: flex;
@@ -198,7 +248,9 @@ body {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .loading-screen p {
@@ -207,9 +259,8 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* ============================================================
-   Dashboard shell (placeholder for Step 7c)
-   ============================================================ */
+/* Dashboard shell  */
+
 .dashboard {
   min-height: 100vh;
   background: var(--gradient-bg);
@@ -217,9 +268,8 @@ body {
   flex-direction: column;
 }
 
-/* ============================================================
-   Dashboard Header
-   ============================================================ */
+/* Dashboard Header */
+
 .dashboard-header {
   position: sticky;
   top: 0;
@@ -229,10 +279,11 @@ body {
   justify-content: space-between;
   padding: 0 2rem;
   height: 64px;
-  background: rgba(6, 13, 31, 0.85);
+  background: var(--header-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
+  transition: background var(--transition);
 }
 
 .header-brand {
@@ -250,7 +301,33 @@ body {
 .header-user {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
+}
+
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: var(--font-sans);
+  flex-shrink: 0;
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--border-accent);
+  color: var(--text-primary);
+  background: var(--bg-surface-hover);
+  transform: scale(1.08);
 }
 
 .user-email {
@@ -276,9 +353,8 @@ body {
   background: var(--bg-surface);
 }
 
-/* ============================================================
-   Dashboard Main
-   ============================================================ */
+/* Dashboard Main */
+
 .dashboard-main {
   flex: 1;
   padding: 2.5rem 2rem;
@@ -324,8 +400,14 @@ body {
   color: var(--text-secondary);
 }
 
-.source-badge.cache { border-color: rgba(6, 182, 212, 0.35); color: var(--cyan); }
-.source-badge.api   { border-color: rgba(16, 185, 129, 0.35); color: var(--green); }
+.source-badge.cache {
+  border-color: rgba(6, 182, 212, 0.35);
+  color: var(--cyan);
+}
+.source-badge.api {
+  border-color: rgba(16, 185, 129, 0.35);
+  color: var(--green);
+}
 
 .refresh-btn {
   display: inline-flex;
@@ -352,31 +434,37 @@ body {
   cursor: not-allowed;
 }
 
-/* ============================================================
-   Cards Grid
-   ============================================================ */
+/* Cards Grid */
+
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
 }
 
-/* ============================================================
-   Weather Card
-   ============================================================ */
+/* Weather Card */
+
 .weather-card {
   position: relative;
   background: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 24px;
-  transition: transform var(--transition), box-shadow var(--transition);
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition);
   animation: card-in 0.4s ease both;
 }
 
 @keyframes card-in {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .weather-card:hover {
@@ -384,9 +472,15 @@ body {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
-.weather-card.rank-gold   { border-color: rgba(255, 215, 0, 0.4); }
-.weather-card.rank-silver { border-color: rgba(192, 192, 192, 0.4); }
-.weather-card.rank-bronze { border-color: rgba(205, 127, 50, 0.4); }
+.weather-card.rank-gold {
+  border-color: rgba(255, 215, 0, 0.4);
+}
+.weather-card.rank-silver {
+  border-color: rgba(192, 192, 192, 0.4);
+}
+.weather-card.rank-bronze {
+  border-color: rgba(205, 127, 50, 0.4);
+}
 
 .card-rank {
   position: absolute;
@@ -397,9 +491,15 @@ body {
   color: var(--text-muted);
 }
 
-.rank-gold   .card-rank { color: #ffd700; }
-.rank-silver .card-rank { color: #c0c0c0; }
-.rank-bronze .card-rank { color: #cd7f32; }
+.rank-gold .card-rank {
+  color: #ffd700;
+}
+.rank-silver .card-rank {
+  color: #c0c0c0;
+}
+.rank-bronze .card-rank {
+  color: #cd7f32;
+}
 
 .card-top {
   display: flex;
@@ -437,7 +537,6 @@ body {
   line-height: 1;
 }
 
-/* Comfort score */
 .comfort-section {
   margin-bottom: 18px;
 }
@@ -463,7 +562,7 @@ body {
 
 .score-bar-bg {
   height: 6px;
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--score-bar-track);
   border-radius: var(--radius-full);
   overflow: hidden;
 }
@@ -474,7 +573,6 @@ body {
   transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Stats row */
 .card-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -482,7 +580,7 @@ body {
 }
 
 .stat-item {
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--stat-bg);
   border-radius: var(--radius-sm);
   padding: 8px;
   text-align: center;
@@ -504,9 +602,8 @@ body {
   color: var(--text-primary);
 }
 
-/* ============================================================
-   Error Banner
-   ============================================================ */
+/* Error Banner */
+
 .error-banner {
   background: rgba(239, 68, 68, 0.08);
   border: 1px solid rgba(239, 68, 68, 0.25);
@@ -516,18 +613,28 @@ body {
   margin-bottom: 24px;
 }
 
-/* ============================================================
-   Responsive
-   ============================================================ */
+/* Responsive */
+
 @media (max-width: 768px) {
-  .dashboard-header { padding: 0 1rem; }
-  .user-email       { display: none; }
-  .dashboard-main   { padding: 1.5rem 1rem; }
-  .dashboard-intro h1 { font-size: 1.5rem; }
-  .cards-grid { grid-template-columns: 1fr; }
+  .dashboard-header {
+    padding: 0 1rem;
+  }
+  .user-email {
+    display: none;
+  }
+  .dashboard-main {
+    padding: 1.5rem 1rem;
+  }
+  .dashboard-intro h1 {
+    font-size: 1.5rem;
+  }
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
-  .cards-grid { grid-template-columns: repeat(2, 1fr); }
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
-
